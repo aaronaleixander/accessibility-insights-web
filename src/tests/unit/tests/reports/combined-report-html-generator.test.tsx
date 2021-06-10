@@ -36,7 +36,7 @@ describe('CombinedReportHtmlGenerator', () => {
     const getTimeStringFromSecondsStub: typeof DateProvider.getTimeStringFromSeconds = () => '';
 
     const fixInstructionProcessorMock = Mock.ofType(FixInstructionProcessor);
-    const recommendColorMock = Mock.ofType(RecommendColor);
+    const recommendColorMock = {} as RecommendColor;
     const getPropertyConfigurationStub = (id: string) => null;
     const getGuidanceTagsStub: GetGuidanceTagsFromGuidanceLinks = () => [];
 
@@ -98,7 +98,7 @@ describe('CombinedReportHtmlGenerator', () => {
             getTimeStringFromSecondsStub,
             getGuidanceTagsStub,
             fixInstructionProcessorMock.object,
-            recommendColorMock.object,
+            recommendColorMock,
             getPropertyConfigurationStub,
         );
     });
@@ -107,7 +107,7 @@ describe('CombinedReportHtmlGenerator', () => {
         const sectionProps: ReportBodyProps<CombinedReportSectionProps> = {
             deps: {
                 fixInstructionProcessor: fixInstructionProcessorMock.object,
-                recommendColor: recommendColorMock.object,
+                recommendColor: recommendColorMock,
                 getGuidanceTagsFromGuidanceLinks: getGuidanceTagsStub,
                 getPropertyConfigById: getPropertyConfigurationStub,
                 collapsibleControl: ReportCollapsibleContainerControl,

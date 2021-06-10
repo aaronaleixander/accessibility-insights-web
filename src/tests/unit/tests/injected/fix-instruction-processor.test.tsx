@@ -77,10 +77,14 @@ describe('FixInstructionProcessor', () => {
 
     test('recommendColor non-stub', () => {
         const fixInstruction =
-            'Element has insufficient color contrast of 2.52 (background color: #21809d, foreground color: #fcfcfc, font size: 12.0pt, font weight: normal). Expected contrast ratio of 4.5:1';
+            'Element has insufficient color contrast of 4.48 (foreground color: #fefefe, background color: #21809d, font size: 10.8pt (14.4px), font weight: normal). Expected contrast ratio of 4.5:1';
 
-        const recommendColor: RecommendColor = new RecommendColor();
-        const result = testSubject.process(fixInstruction, recommendColor);
+        recommendationStub = {
+            sentence:
+                '• Use foreground color: #ffffff and the original background color: #21809d to meet a contrast ratio of 4.53:1. • Or use background color: #1f7995 and the original foreground color: #fefefe to meet a contrast ratio of 4.93:1.',
+        } as RecommendColor;
+
+        const result = testSubject.process(fixInstruction, recommendationStub);
 
         expect(result).toMatchSnapshot();
     });

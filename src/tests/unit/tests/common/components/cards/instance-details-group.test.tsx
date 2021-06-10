@@ -17,7 +17,7 @@ import { exampleUnifiedRuleResult } from './sample-view-model-data';
 describe('InstanceDetailsGroup', () => {
     it('renders', () => {
         const fixInstructionProcessorMock = Mock.ofType(FixInstructionProcessor);
-        const recommendColorMock = Mock.ofType(RecommendColor);
+        const recommendColorMock = {} as RecommendColor;
         const rule: CardRuleResult = exampleUnifiedRuleResult;
         const depsStub: InstanceDetailsGroupDeps = {} as InstanceDetailsGroupDeps;
 

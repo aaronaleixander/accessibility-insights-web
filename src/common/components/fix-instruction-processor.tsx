@@ -40,7 +40,7 @@ export class FixInstructionProcessor {
     private readonly contrastRatioRegExp = new RegExp(`${this.contrastRatioText}`, 'i');
     private readonly originalMiddleSentence = ' and the original foreground color: ';
 
-    private readonly recommendEndSentence = ' to meet a contrast ratio of #.##:1.';
+    private readonly recommendEndSentence = ' to meet a contrast ratio of #.##:1';
 
     public process(fixInstruction: string, recommendation: RecommendColor): JSX.Element {
         fixInstruction += '.';
