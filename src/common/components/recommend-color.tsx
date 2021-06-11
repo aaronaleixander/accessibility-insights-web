@@ -7,32 +7,23 @@ const MINCOLORCOMPONENT: number = 0;
 export class RecommendColor {
     private _sentence: string;
 
-    public getRecommendColor(fore: string, back: string, contrast: number): string | null {
+    public getRecommendColor(fore: string, back: string, contrast: number): string {
         const foreRgb = this.hexToRGB(fore);
         const backRgb = this.hexToRGB(back);
-        if (foreRgb && backRgb != null) {
-            return (this._sentence = this.recommend(foreRgb, backRgb, contrast));
-        }
-
-        return null;
+        return (this._sentence = this.recommend(foreRgb, backRgb, contrast));
     }
 
     public get sentence(): string {
         return this._sentence;
     }
 
-    private rgbToHex(r: number, g: number, b: number): string | null {
-        if (r != null && g != null && b != null)
-            return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
-        return null;
+    private rgbToHex(r: number, g: number, b: number): string {
+        return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
     }
 
-    private hexToRGB(hex: string): number[] | null {
+    private hexToRGB(hex: string): number[] {
         const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-        if (result != null) {
-            return [parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16)];
-        }
-        return null;
+        return [parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16)];
     }
 
     private getLuminance(color: number[]): number {
@@ -87,13 +78,13 @@ export class RecommendColor {
     }
 
     private recommend(fore: number[], back: number[], colorContrast: number) {
-        const foreOriginal: string | null = this.rgbToHex(fore[0], fore[1], fore[2]);
-        const backOriginal: string | null = this.rgbToHex(back[0], back[1], back[2]);
-        const foreLum: number | null = this.getLuminance(fore);
-        const backLum: number | null = this.getLuminance(back);
-        const lighter: number | null = Math.max(foreLum, backLum);
-        const darker: number | null = lighter === foreLum ? backLum : foreLum;
-        const contrast: number | null = (lighter + 0.05) / (darker + 0.05);
+        const foreOriginal: string = this.rgbToHex(fore[0], fore[1], fore[2]);
+        const backOriginal: string = this.rgbToHex(back[0], back[1], back[2]);
+        const foreLum: number = this.getLuminance(fore);
+        const backLum: number = this.getLuminance(back);
+        const lighter: number = Math.max(foreLum, backLum);
+        const darker: number = lighter === foreLum ? backLum : foreLum;
+        const contrast: number = (lighter + 0.05) / (darker + 0.05);
 
         let lightened: number[], darkened: number[];
 
@@ -120,9 +111,9 @@ export class RecommendColor {
             colorContrast,
         );
 
-        let sentence: string | null = ' ',
-            foreRec: string | null,
-            backRec: string | null;
+        let sentence: string = ' ',
+            foreRec: string,
+            backRec: string;
 
         if (lighter === foreLum) {
             if (recommendLightened[1] > colorContrast) {
@@ -187,11 +178,11 @@ export class RecommendColor {
     }
 
     private createSentence(
-        rec: string | null,
+        rec: string,
         contrast: number,
         sentence: string,
         foreBack: boolean,
-        original: string | null,
+        original: string,
     ) {
         if (foreBack) {
             sentence = ' Use foreground color: ' + rec + ' and the original background color: ';

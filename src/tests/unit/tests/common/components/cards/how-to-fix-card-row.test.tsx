@@ -14,11 +14,10 @@ import { Mock } from 'typemoq';
 describe('HowToFixWebCardRow', () => {
     it('renders', () => {
         const fixInstructionProcessorMock = Mock.ofType(FixInstructionProcessor);
-        const recommendColorMock = {} as RecommendColor;
         const props: HowToFixWebCardRowProps = {
             deps: {
                 fixInstructionProcessor: fixInstructionProcessorMock.object,
-                recommendColor: recommendColorMock,
+                recommendColor: {} as RecommendColor,
                 LinkComponent: {} as LinkComponentType,
             },
             index: 22,

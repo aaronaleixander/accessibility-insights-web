@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 import { FixInstructionProcessor } from 'common/components/fix-instruction-processor';
 import { RecommendColor } from 'common/components/recommend-color';
+import { Mock, Times } from 'typemoq';
 
 describe('FixInstructionProcessor', () => {
     let testSubject: FixInstructionProcessor;
@@ -78,14 +79,20 @@ describe('FixInstructionProcessor', () => {
     test('recommendColor non-stub', () => {
         const fixInstruction =
             'Element has insufficient color contrast of 4.48 (foreground color: #fefefe, background color: #21809d, font size: 10.8pt (14.4px), font weight: normal). Expected contrast ratio of 4.5:1';
+        
+        const getRecommendColorReturnValue = 
+            'Use foreground color: #ffffff and the original background color: #21809d to meet a contrast ratio of 4.53:1. Or use background color: #1f7995 and the original foreground color: #fcfcfc to meet a contrast ratio of 4.84:1.';
+        const recommendColorMock = Mock.ofType(RecommendColor);
 
-        recommendationStub = {
-            sentence:
-                '• Use foreground color: #ffffff and the original background color: #21809d to meet a contrast ratio of 4.53:1. • Or use background color: #1f7995 and the original foreground color: #fefefe to meet a contrast ratio of 4.93:1.',
-        } as RecommendColor;
+        recommendColorMock
+            .setup(rc => rc.getRecommendColor('#fefefe', '#21809d', 4.5))
+            .returns(() => getRecommendColorReturnValue)
+            .verifiable(Times.once());
+        
 
-        const result = testSubject.process(fixInstruction, recommendationStub);
+        const result = testSubject.process(fixInstruction, recommendColorMock.object);
 
         expect(result).toMatchSnapshot();
+        recommendColorMock.verifyAll();
     });
 });
